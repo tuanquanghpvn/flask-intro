@@ -3,4 +3,4 @@ from .. import admin
 
 @admin.route('/admin')
 def dashboard():
-    return render_template('dashboard.html')
+    return render_template('admin/dashboard.html')
