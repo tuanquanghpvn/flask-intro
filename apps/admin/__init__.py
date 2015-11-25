@@ -1,7 +1,5 @@
-from flask import Blueprint, render_template
+from flask import Blueprint
 
-admin = Blueprint( 'admin', __name__,
-                    template_folder='templates',
-                    static_folder='static',)
+admin_blueprint = Blueprint('admin', __name__, static_folder='static', template_folder='templates', url_prefix='/admin')
 
-from . import views
+from views import dashboard

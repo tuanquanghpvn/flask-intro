@@ -1,6 +1,13 @@
 from flask import render_template
-from .. import admin 
+from flask.ext.classy import FlaskView
+from apps.admin import admin_blueprint
 
-@admin.route('/admin')
-def dashboard():
-    return render_template('admin/dashboard.html')
+
+class DashboardView(FlaskView):
+    route_base = '/'
+
+    def index(self):
+        return render_template('/admin/dashboard.html')
+
+
+DashboardView.register(admin_blueprint)
