@@ -1,13 +1,13 @@
 """empty message
 
-Revision ID: 1be28a94bc8c
+Revision ID: 192e5c4782f0
 Revises: None
-Create Date: 2015-11-25 16:00:56.948873
+Create Date: 2015-11-26 10:20:45.263056
 
 """
 
 # revision identifiers, used by Alembic.
-revision = '1be28a94bc8c'
+revision = '192e5c4782f0'
 down_revision = None
 
 from alembic import op
@@ -20,12 +20,20 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=255), nullable=True),
     sa.Column('slug', sa.String(length=255), nullable=True),
+    sa.Column('description', sa.Text(), nullable=True),
+    sa.Column('created_date', sa.DateTime(), nullable=True),
+    sa.Column('modified_date', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('post',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=255), nullable=True),
     sa.Column('slug', sa.String(length=255), nullable=True),
+    sa.Column('description', sa.Text(), nullable=True),
+    sa.Column('created_date', sa.DateTime(), nullable=True),
+    sa.Column('modified_date', sa.DateTime(), nullable=True),
+    sa.Column('category_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['category_id'], ['category.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     ### end Alembic commands ###

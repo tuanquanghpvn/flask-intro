@@ -14,9 +14,14 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
-            <li class="active">
-                <a href="#">
-                <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+            <li class="{% if info and 'dashboard' in info.sidebar %} active {% endif %}">
+                <a href="{{ url_for('admin.DashboardView:index') }}">
+                    <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="{% if info and 'category' in info.sidebar %} active {% endif %}">
+                <a href="{{ url_for('admin.CategoryListView:index') }}">
+                    <i class="fa fa-list"></i> <span>Category</span>
                 </a>
             </li>
         </ul>

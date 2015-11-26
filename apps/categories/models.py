@@ -1,14 +1,12 @@
 from apps import db
+from apps.core.models import Timestampable, Describable
 
 
-class Category(db.Model):
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(255))
-    slug = db.Column(db.String(255))
-
-    def __init__(self, name, slug):
+class Category(Describable, Timestampable):
+    def __init__(self, name, slug, description):
         self.name = name
         self.slug = slug
+        self.description = description
 
     def __repr__(self):
         return '<Category %r>', self.name

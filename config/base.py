@@ -8,3 +8,5 @@ SECRET_KEY = '&%^%&12o)!JHGHVJBK671i2lkj;^*&:'
 SQLALCHEMY_DATABASE_URI = 'mysql://root:abc!@#ABC@localhost/flask_intro'
 SQLALCHEMY_TRACK_MODIFICATIONS = True
 
+WTF_CSRF_CHECK_DEFAULT = True
+
