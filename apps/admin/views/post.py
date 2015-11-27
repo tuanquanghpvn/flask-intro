@@ -13,8 +13,9 @@ class PostForm(Form):
     """
         Form View Post
     """
-    category_id = SelectField('category', coerce=int, choices=[(item.id, item.name) for item in Category.query.all()],
-                              validators=[InputRequired()])
+    # category_id = SelectField('category', coerce=int, choices=[(item.id, item.name) for item in Category.query.all()],
+    #                           validators=[InputRequired()])
+    category_id = StringField('category_id')
     name = StringField('name', validators=[DataRequired()])
     slug = StringField('slug', validators=[DataRequired(), Regexp(r'[\w-]+$', message='Slug is not validate!')])
     description = StringField('description')
