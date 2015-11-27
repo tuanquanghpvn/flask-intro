@@ -24,6 +24,11 @@
                     <i class="fa fa-list"></i> <span>Category</span>
                 </a>
             </li>
+            <li class="{% if info and 'post' in info.sidebar %} active {% endif %}">
+                <a href="{{ url_for('admin.PostListView:index') }}">
+                    <i class="fa fa-list"></i> <span>Post</span>
+                </a>
+            </li>
         </ul>
     </section>
     <!-- /.sidebar -->

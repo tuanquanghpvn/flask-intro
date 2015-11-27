@@ -7,12 +7,12 @@ class Post(Describable, Timestampable):
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
     category = db.relationship('Category', backref=db.backref('posts', lazy='dynamic'))
 
-    def __init__(self, name, slug, description, content, category):
+    def __init__(self, name, slug, description, content, category_id):
         self.name = name
         self.slug = slug
         self.description = description
         self.content = content
-        self.category = category
+        self.category_id = category_id
 
     def __repr__(self):
         return '<Post %r>', self.name
