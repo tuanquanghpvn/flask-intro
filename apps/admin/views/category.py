@@ -1,9 +1,9 @@
 from flask import render_template, redirect, url_for
-from flask.ext.classy import FlaskView
 from flask_wtf import Form
 from wtforms import StringField
 from wtforms.validators import DataRequired, Regexp
 from apps import db
+from apps.core.views import LoginRequireMixin
 from apps.admin import admin_blueprint
 from apps.categories.models import Category
 
@@ -17,7 +17,7 @@ class CategoryForm(Form):
     description = StringField('description')
 
 
-class CategoryListView(FlaskView):
+class CategoryListView(LoginRequireMixin):
     """
         Show List Category
         Paginate Category
@@ -41,7 +41,7 @@ class CategoryListView(FlaskView):
 CategoryListView.register(admin_blueprint)
 
 
-class CategoryCreateView(FlaskView):
+class CategoryCreateView(LoginRequireMixin):
     """
         Create Category
     """
@@ -80,7 +80,7 @@ class CategoryCreateView(FlaskView):
 CategoryCreateView.register(admin_blueprint)
 
 
-class CategoryUpdateView(FlaskView):
+class CategoryUpdateView(LoginRequireMixin):
     """
        Update Category
     """
@@ -122,7 +122,7 @@ class CategoryUpdateView(FlaskView):
 CategoryUpdateView.register(admin_blueprint)
 
 
-class CategoryDeleteView(FlaskView):
+class CategoryDeleteView(LoginRequireMixin):
     """
         Delete Category
     """

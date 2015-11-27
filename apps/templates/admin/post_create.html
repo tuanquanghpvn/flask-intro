@@ -35,7 +35,7 @@
 
                             <div class="form-group {% if form.category_id.errors %} has-error {% endif %}">
                                 <label>Category</label>
-                                {{ form.category_id(class_="form-control", style="width: 100%;") }}
+                                {{ form.category_id(class_="form-control select2", style="width: 100%;") }}
                                 <span class="help-block">
                                     {% for error in form.category_id.errors %}
                                         <p>{{ error }}</p>

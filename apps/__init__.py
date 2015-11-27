@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request, redirect, url_for
 from flask.ext.migrate import Migrate, MigrateCommand
 from flask.ext.script import Manager
 from flask.ext.sqlalchemy import SQLAlchemy
@@ -21,6 +21,15 @@ bcrypt = Bcrypt(app)
 # Login manager
 login_manager = LoginManager()
 login_manager.init_app(app)
+
+
+@login_manager.unauthorized_handler
+def unauthorized_handler():
+    if request.blueprint == 'admin':
+        return redirect(url_for('admin.LoginView:index', next=request.path))
+    else:
+        pass
+
 
 # Register blueprint
 from .admin import admin_blueprint

@@ -3,8 +3,6 @@ from apps.core.models import Timestampable, Describable
 
 
 class Post(Describable, Timestampable):
-    __tablename__ = 'posts'
-
     content = db.Column(db.Text)
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
     category = db.relationship('Category', backref=db.backref('posts', lazy='dynamic'))

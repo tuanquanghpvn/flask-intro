@@ -3,8 +3,6 @@ from apps.core.models import Timestampable, Describable
 
 
 class Category(Describable, Timestampable):
-    __tablename__ = 'categories'
-
     def __init__(self, name, slug, description):
         self.name = name
         self.slug = slug

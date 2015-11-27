@@ -1,5 +1,4 @@
-from flask import render_template, redirect, url_for, request
-from flask.ext.classy import FlaskView
+from flask import render_template, redirect, url_for
 from flask_wtf import Form
 from wtforms import StringField, SelectField
 from wtforms.validators import DataRequired, Regexp, InputRequired
@@ -7,22 +6,22 @@ from apps import db
 from apps.admin import admin_blueprint
 from apps.categories.models import Category
 from apps.posts.models import Post
+from apps.core.views import LoginRequireMixin
 
 
 class PostForm(Form):
     """
         Form View Post
     """
-    # category_id = SelectField('category', coerce=int, choices=[(item.id, item.name) for item in Category.query.all()],
-    #                           validators=[InputRequired()])
-    category_id = StringField('category_id')
+    category_id = SelectField('category', coerce=int, choices=[(item.id, item.name) for item in Category.query.all()],
+                              validators=[InputRequired()])
     name = StringField('name', validators=[DataRequired()])
     slug = StringField('slug', validators=[DataRequired(), Regexp(r'[\w-]+$', message='Slug is not validate!')])
     description = StringField('description')
     content = StringField('content')
 
 
-class PostListView(FlaskView):
+class PostListView(LoginRequireMixin):
     """
         Show List Post
         Paginate Post
@@ -46,7 +45,7 @@ class PostListView(FlaskView):
 PostListView.register(admin_blueprint)
 
 
-class PostCreateView(FlaskView):
+class PostCreateView(LoginRequireMixin):
     """
         Create Post
     """
@@ -87,7 +86,7 @@ class PostCreateView(FlaskView):
 PostCreateView.register(admin_blueprint)
 
 
-class PostUpdateView(FlaskView):
+class PostUpdateView(LoginRequireMixin):
     """
        Update Post
     """
@@ -131,7 +130,7 @@ class PostUpdateView(FlaskView):
 PostUpdateView.register(admin_blueprint)
 
 
-class PostDeleteView(FlaskView):
+class PostDeleteView(LoginRequireMixin):
     """
         Delete Post
     """

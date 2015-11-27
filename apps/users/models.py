@@ -4,8 +4,6 @@ from apps.core.models import Timestampable
 
 
 class User(Timestampable, UserMixin):
-    __tablename__ = 'users'
-
     # Require Information
     id = db.Column('user_id', db.Integer, primary_key=True)
     username = db.Column('username', db.String(20), unique=True, index=True)
@@ -17,10 +15,10 @@ class User(Timestampable, UserMixin):
     last_name = db.Column('last_name', db.String(255), nullable=False, server_default='')
     avatar = db.Column('avatar', db.String(255))
 
-    def __init__(self, username, password, email, firts_name, last_name):
+    def __init__(self, username, password, email, first_name, last_name):
         self.username = username
         self.password = password
         self.email = email
-        self.first_name = firts_name
+        self.first_name = first_name
         self.last_name = last_name
 
