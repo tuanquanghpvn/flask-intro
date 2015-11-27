@@ -22,15 +22,6 @@ bcrypt = Bcrypt(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 
-
-@login_manager.unauthorized_handler
-def unauthorized_handler():
-    if request.blueprint == 'admin':
-        return redirect(url_for('admin.LoginView:index', next=request.path))
-    else:
-        pass
-
-
 # Register blueprint
 from .admin import admin_blueprint
 from .categories import categories_blueprint
@@ -41,3 +32,16 @@ app.register_blueprint(admin_blueprint)
 app.register_blueprint(categories_blueprint)
 app.register_blueprint(posts_blueprint)
 app.register_blueprint(users_blueprint)
+
+
+@login_manager.unauthorized_handler
+def unauthorized_handler():
+    if request.blueprint == 'admin':
+        return redirect(url_for('admin.LoginView:index', next=request.path))
+    else:
+        pass
+
+from apps.users.models import User
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)

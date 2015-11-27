@@ -36,21 +36,31 @@
     <div class="login-box-body">
         <p class="login-box-msg">Login And Manager</p>
 
-        <form action="" method="POST">
-            <div class="form-group has-feedback">
+        <form action="{{ url_for('admin.LoginView:post') }}" method="POST">
+            {{ form.csrf_token() }}
+
+            <div class="form-group {% if form.username.errors %} has-error {% endif %} has-feedback">
                 <input type="text" name="username"
-                       value="" class="form-control"
+                       value="{{ form.username.data if form.username.data != None else '' }}" class="form-control"
                        placeholder="Enter username">
                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-                <span class="help-block"></span>
+                <span class="help-block">
+                    {% for error in form.username.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </span>
             </div>
 
-            <div class="form-group has-feedback">
+            <div class="form-group {% if form.password.errors %} has-error {% endif %} has-feedback">
                 <input type="password" name="password"
-                       value="" class="form-control"
+                       value="{{ form.password.data if form.password.data != None else '' }}" class="form-control"
                        placeholder="Enter password">
                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-                <span class="help-block"></span>
+                <span class="help-block">
+                    {% for error in form.password.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </span>
             </div>
 
             <div class="row">
