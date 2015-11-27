@@ -1,8 +1,16 @@
+import argparse
 import sys
 from apps import manager, db
 from apps.users.models import User
 
 if __name__ == '__main__':
+    # parser = argparse.ArgumentParser()
+    # parser.add_argument('createsuperuser', nargs='+')
+    # if len(sys.argv) == 1:
+    #     parser.print_help()
+    #     sys.exit(1)
+    # args = parser.parse_args()
+
     CRUSER = 'createsuperuser'
     if CRUSER in sys.argv:
         # Get information
