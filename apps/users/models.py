@@ -10,6 +10,10 @@ class User(Timestampable, UserMixin):
     password = db.Column('password', db.Text())
     email = db.Column('email', db.String(50), unique=True, index=True)
 
+    superuser = db.Column('superuser', db.Boolean(), nullable=False, default=False)
+    active = db.Column('active', db.Boolean(), nullable=False, default=False)
+    staff = db.Column('staff', db.Boolean(), nullable=False, default=False)
+
     # Name Information
     first_name = db.Column('first_name', db.String(255), nullable=False, server_default='')
     last_name = db.Column('last_name', db.String(255), nullable=False, server_default='')
@@ -36,3 +40,15 @@ class User(Timestampable, UserMixin):
             return bcrypt.check_password_hash(self.password, password)
         except:
             return False
+
+    @property
+    def is_superuser(self):
+        return self.superuser
+
+    @property
+    def is_active(self):
+        return self.active
+
+    @property
+    def is_staff(self):
+        return self.staff

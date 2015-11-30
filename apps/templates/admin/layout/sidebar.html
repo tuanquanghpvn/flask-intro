@@ -29,6 +29,11 @@
                     <i class="fa fa-list"></i> <span>Post</span>
                 </a>
             </li>
+            <li class="{% if info and 'user' in info.sidebar %} active {% endif %}">
+                <a href="{{ url_for('admin.UserListView:index') }}">
+                    <i class="fa fa-list"></i> <span>User</span>
+                </a>
+            </li>
         </ul>
     </section>
     <!-- /.sidebar -->

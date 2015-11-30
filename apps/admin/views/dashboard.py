@@ -6,7 +6,7 @@ from wtforms import StringField, PasswordField
 from wtforms.validators import DataRequired, EqualTo
 from apps import db
 from apps.admin import admin_blueprint
-from apps.core.views import LoginRequireMixin
+from apps.core.views import AdminRequireMixin
 from apps.users.models import User
 
 
@@ -64,7 +64,7 @@ class LoginView(FlaskView):
 LoginView.register(admin_blueprint)
 
 
-class LogoutView(LoginRequireMixin):
+class LogoutView(AdminRequireMixin):
     route_base = '/logout'
 
     def index(self):
@@ -76,7 +76,7 @@ class LogoutView(LoginRequireMixin):
 LogoutView.register(admin_blueprint)
 
 
-class DashboardView(LoginRequireMixin):
+class DashboardView(AdminRequireMixin):
     """
         Dashboard View
     """
@@ -123,7 +123,7 @@ class ProfileForm(Form):
         return True
 
 
-class ProfileView(LoginRequireMixin):
+class ProfileView(AdminRequireMixin):
     """
         Profile View: Change password
     """

@@ -6,7 +6,7 @@ from apps import db
 from apps.admin import admin_blueprint
 from apps.categories.models import Category
 from apps.posts.models import Post
-from apps.core.views import LoginRequireMixin
+from apps.core.views import AdminRequireMixin
 
 
 class PostForm(Form):
@@ -21,7 +21,7 @@ class PostForm(Form):
     content = StringField('content')
 
 
-class PostListView(LoginRequireMixin):
+class PostListView(AdminRequireMixin):
     """
         Show List Post
         Paginate Post
@@ -45,7 +45,7 @@ class PostListView(LoginRequireMixin):
 PostListView.register(admin_blueprint)
 
 
-class PostCreateView(LoginRequireMixin):
+class PostCreateView(AdminRequireMixin):
     """
         Create Post
     """
@@ -86,7 +86,7 @@ class PostCreateView(LoginRequireMixin):
 PostCreateView.register(admin_blueprint)
 
 
-class PostUpdateView(LoginRequireMixin):
+class PostUpdateView(AdminRequireMixin):
     """
        Update Post
     """
@@ -130,7 +130,7 @@ class PostUpdateView(LoginRequireMixin):
 PostUpdateView.register(admin_blueprint)
 
 
-class PostDeleteView(LoginRequireMixin):
+class PostDeleteView(AdminRequireMixin):
     """
         Delete Post
     """
