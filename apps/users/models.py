@@ -1,4 +1,4 @@
-from flask_user import UserMixin
+from flask.ext.login import UserMixin
 from apps import db, bcrypt
 from apps.core.models import Timestampable
 
