@@ -102,15 +102,14 @@ class CategoryUpdateView(LoginRequireMixin):
         context['form'] = CategoryForm(obj=category)
         return render_template('/admin/category_update.html', **context)
 
-    def post(self):
+    def post(self, id):
         form = CategoryForm()
         if form.validate_on_submit():
-            category = Category(
-                name=form.name.data,
-                slug=form.slug.data,
-                description=form.description.data
-            )
-            db.session.add(category)
+            category = Category.query.get(id)
+            category.name = form.name.data
+            category.slug = form.slug.data
+            category.description = form.description.data
+
             db.session.commit()
             return redirect(url_for('admin.CategoryListView:index'))
         else:
