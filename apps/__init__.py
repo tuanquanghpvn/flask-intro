@@ -28,10 +28,18 @@ from .categories import categories_blueprint
 from .posts import posts_blueprint
 from .users import users_blueprint
 
+from .homes import homes_bluesrprints
+from .contacts import contacts_bluesrprints
+from .abouts import abouts_bluesrprints
+
 app.register_blueprint(admin_blueprint)
 app.register_blueprint(categories_blueprint)
 app.register_blueprint(posts_blueprint)
 app.register_blueprint(users_blueprint)
+
+app.register_blueprint(homes_bluesrprints)
+app.register_blueprint(contacts_bluesrprints)
+app.register_blueprint(abouts_bluesrprints)
 
 
 @login_manager.unauthorized_handler

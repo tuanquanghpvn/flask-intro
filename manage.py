@@ -1,4 +1,3 @@
-import argparse
 import sys
 from apps import manager, db
 from apps.users.models import User

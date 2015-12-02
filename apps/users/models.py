@@ -10,16 +10,17 @@ class User(Timestampable, UserMixin):
     password = db.Column('password', db.Text())
     email = db.Column('email', db.String(50), unique=True, index=True)
 
-    superuser = db.Column('superuser', db.Boolean(), nullable=False, default=False)
-    active = db.Column('active', db.Boolean(), nullable=False, default=False)
-    staff = db.Column('staff', db.Boolean(), nullable=False, default=False)
+    is_superuser = db.Column('is_superuser', db.Boolean(), nullable=False, default=False)
+    is_active = db.Column('is_active', db.Boolean(), nullable=False, default=False)
+    is_staff = db.Column('is_staff', db.Boolean(), nullable=False, default=False)
 
     # Name Information
     first_name = db.Column('first_name', db.String(255), nullable=False, server_default='')
     last_name = db.Column('last_name', db.String(255), nullable=False, server_default='')
     avatar = db.Column('avatar', db.String(255))
 
-    def __init__(self, username, email, password=None, first_name='', last_name='', avatar=None):
+    def __init__(self, username, email, password=None, first_name='', last_name='', avatar=None, is_superuser=False,
+                 is_active=False, is_staff=False):
         self.username = username
         if password:
             self.password = password
@@ -27,6 +28,9 @@ class User(Timestampable, UserMixin):
         self.first_name = first_name
         self.last_name = last_name
         self.avatar = avatar
+        self.is_superuser = is_superuser
+        self.is_active = is_active
+        self.is_staff = is_staff
 
     def set_password(self, password):
         try:
@@ -40,15 +44,3 @@ class User(Timestampable, UserMixin):
             return bcrypt.check_password_hash(self.password, password)
         except:
             return False
-
-    @property
-    def is_superuser(self):
-        return self.superuser
-
-    @property
-    def is_active(self):
-        return self.active
-
-    @property
-    def is_staff(self):
-        return self.staff

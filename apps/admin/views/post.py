@@ -1,12 +1,17 @@
 from flask import render_template, redirect, url_for
+from flask.ext.uploads import UploadSet, IMAGES
 from flask_wtf import Form
+from flask_wtf.file import FileAllowed
+from flask_wtf.file import FileField
+from werkzeug.utils import secure_filename
 from wtforms import StringField, SelectField
 from wtforms.validators import DataRequired, Regexp, InputRequired
-from apps import db
+from apps import db, app
 from apps.admin import admin_blueprint
 from apps.categories.models import Category
 from apps.posts.models import Post
 from apps.core.views import AdminRequireMixin
+import os
 
 
 class PostForm(Form):
@@ -19,6 +24,7 @@ class PostForm(Form):
     slug = StringField('slug', validators=[DataRequired(), Regexp(r'[\w-]+$', message='Slug is not validate!')])
     description = StringField('description')
     content = StringField('content')
+    image = FileField('image')
 
 
 class PostListView(AdminRequireMixin):
@@ -74,6 +80,11 @@ class PostCreateView(AdminRequireMixin):
                 content=form.content.data,
                 category_id=form.category_id.data
             )
+            if form.image.data:
+                filename = secure_filename(form.image.data.filename)
+                dir_save = os.path.join('media/posts/', filename)
+                form.image.data.save(dir_save)
+                post.image = dir_save
             db.session.add(post)
             db.session.commit()
             return redirect(url_for('admin.PostListView:index'))

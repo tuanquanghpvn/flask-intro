@@ -10,9 +10,9 @@ from apps.users.models import User
 
 class UserForm(Form):
     """
-        Form View User
+        Form View Create User
     """
-    username = StringField('username', validators=[DataRequired()])
+    username = StringField('username')
     password1 = PasswordField('password1', validators=[DataRequired()])
     password2 = PasswordField('password2', validators=[DataRequired(),
                                                        EqualTo('password1', message='Re password not equal password!')])
@@ -36,6 +36,17 @@ class UserForm(Form):
             self.password2.errors.append('Re password is not equal password!')
             return False
         return True
+
+
+class UserUpdateForm(Form):
+    """
+        Form View User
+    """
+    username = StringField('username')
+    password = PasswordField('password')
+    email = StringField('email')
+    first_name = StringField('first_name')
+    last_name = StringField('last_name')
 
 
 class UserListView(AdminRequireMixin):
@@ -90,7 +101,7 @@ class UserCreateView(AdminRequireMixin):
                 first_name=form.first_name.data,
                 last_name=form.last_name.data,
                 avatar='',
-                active=True
+                is_active=True
             )
             user.set_password(form.password1.data)
             db.session.add(user)
@@ -117,23 +128,24 @@ class UserUpdateView(AdminRequireMixin):
                 'title': 'User Update',
                 'sidebar': ['user']
             },
-            'form': UserForm()
+            'form': UserUpdateForm()
         }
         return context
 
     def get(self, id):
         user = User.query.get(id)
         context = self.get_context_data()
-        context['form'] = UserForm(obj=user)
+        context['form'] = UserUpdateForm(obj=user)
         return render_template('/admin/user_update.html', **context)
 
     def post(self, id):
-        form = UserForm()
+        form = UserUpdateForm()
         if form.validate_on_submit():
             user = User.query.get(id)
-            user.name = form.name.data
-            user.slug = form.slug.data
-            user.description = form.description.data
+            user.first_name = form.first_name.data
+            user.last_name = form.last_name.data
+            if form.password.data:
+                user.set_password(form.password.data)
 
             db.session.commit()
             return redirect(url_for('admin.UserListView:index'))
